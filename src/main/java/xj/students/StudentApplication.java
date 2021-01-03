@@ -8,7 +8,7 @@ import xj.students.model.Student;
 import xj.students.repositrory.StudentRepository;
 
 import java.util.Date;
-
+//test 1 by XJabrane
 @SpringBootApplication
 public class StudentApplication {
 
