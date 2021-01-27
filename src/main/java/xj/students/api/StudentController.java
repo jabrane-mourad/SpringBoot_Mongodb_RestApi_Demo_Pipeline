@@ -7,7 +7,7 @@ import xj.students.repositrory.StudentRepository;
 import java.util.List;
 
 @RestController
-@RequestMapping("/student")
+@RequestMapping("/students")
 public class StudentController {
     private final StudentRepository studentRepository;
 
