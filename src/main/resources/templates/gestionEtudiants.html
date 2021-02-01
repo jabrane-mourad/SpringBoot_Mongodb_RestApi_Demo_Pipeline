@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html
+		xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="UTF-8">
+	<title>Gestion des etudiant</title>
+	<link href="css/bootstrap.css" rel="stylesheet" th:href="@{/css/bootstrap.css}" type="text/css">
+	<link href="css/form.css" rel="stylesheet" th:href="@{/css/form.css}" type="text/css">
+</head>
+<script>
+    function closeForm() {
+        document.getElementById("myForm").style.display = "none";
+    }
+
+    function closeFormAdd() {
+        document.getElementById("add").style.display = "none";
+    }
+</script>
+<body>
+<div class="container-fluid">
+	<!-- nav bar-->
+	<header>
+		<div class="navbar navbar-default ">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<a class="navbar-brand">Home</a>
+				</div>
+				<ul class="nav navbar-nav">
+					<li class="active"><a>Gestion des etudiants</a></li>
+				</ul>
+			</div>
+		</div>
+	</header>
+
+	<!-- recherche-->
+	<form method="post" th:action="@{/gestionEtudiants/rechercheMassar}">
+		<div style="margin-bottom: 10px;text-align: center">
+			<div>
+				<input name="input" placeholder="recherche" required style="text-align: center" type="text">
+			</div>
+			<div>
+				<input checked name="par"
+				       type="radio"
+				       value="code">
+				<label>par code</label>
+				<input name="par"
+				       type="radio"
+				       value="nom">
+				<label>par nom</label>
+				<button class="btn btn-primary" type="submit">Recherche</button>
+			</div>
+			<div STYLE="text-align: right">
+				<a  class="btn btn-success btn-sm"
+				   th:href="@{/gestionEtudiants/ajouter}">+ Ajouter Massar</a>
+			</div>
+		</div>
+	</form>
+
+
+
+	<!-- liste des etudiant-->
+	<div class="panel panel-success">
+		<div class="panel-heading">List des etudiant</div>
+		<div class="panel-body">
+			<table class="table table-striped" th:if="${studentsPage}">
+				<tr>
+					<th>codeMassar</th>
+					<th>nom</th>
+					<th>prenom</th>
+					<th>email</th>
+					<th>date de naissance</th>
+				</tr>
+				<tr th:each="c:${studentsPage}">
+					<td th:text="${c.codeMassar}"></td>
+					<td th:text="${c.firstname}"></td>
+					<td th:text="${c.lastname}"></td>
+					<td th:text="${c.email}"></td>
+					<td th:text="${c.dateOfBirth.toString().split(' ')[0]}"></td>
+
+					<td><a class="btn btn-danger btn-xs"
+						   th:href="@{/gestionEtudiants/supprimer(codeMassar=${c.codeMassar},page=${numPage})}">Supprimer</a>
+					</td>
+
+				</tr>
+			</table>
+			<div class="container-fluid">
+				<ul class="nav nav-pills">
+					<li th:each="p,status:${nombrePage}">
+						<a href="#" style="text-decoration: underline;background-color: #bce8f1"
+						   th:if="${status.index==numPage}"
+						   th:text="${status.index}"></a>
+						<a th:href="@{/gestionEtudiants(page=${status.index})}"
+						   th:if="${status.index != numPage}"
+						   th:text="${status.index}"></a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+
+</div>
+
+<!-- add form-->
+<div class="form-popup" id="add" th:if="${ajouter}">
+	<form class="form-container" method="post" th:action="@{/gestionEtudiants/ajouterAgent}">
+		<label><b>code masar</b></label>
+		<input name="codeMassar" placeholder="code masar" required type="text">
+		<label><b>Prenom</b></label>
+		<input name="prenom" placeholder="Prenom" required type="text">
+		<label><b>Nom</b></label>
+		<input name="nom" placeholder="Nom" required type="text">
+		<label><b>Email</b></label>
+		<input name="email" placeholder="email" required type="text">
+		<label>date naissance :</label>
+		<input name="date" placeholder="yyyy-mm-dd" th:value="2010-12-30" required type="text">
+
+		<button class="btn" type="submit">Ajouter</button>
+		<button class="btn cancel" onclick="closeFormAdd()" type="button">Cancel</button>
+	</form>
+
+
+</div>
+
+
+<!-- alert msg-->
+<div>
+	<div class="text-danger"
+		 th:if="${#httpServletRequest.getParameter('input')=='false'}">
+		<script>
+			alert("le code doit être un nombre entier");
+		</script>
+	</div>
+	<div class="text-danger"
+		 th:if="${#httpServletRequest.getParameter('m')=='1'}">
+		<script>
+			alert("Mise à jour terminée avec succès");
+		</script>
+	</div>
+	<div class="text-danger"
+		 th:if="${#httpServletRequest.getParameter('m')=='0'}">
+		<script>
+			alert("Erreur de mise à jour");
+		</script>
+	</div>
+	<div class="text-danger"
+		 th:if="${#httpServletRequest.getParameter('s')=='1'}">
+		<script>
+			alert("L'etudiant a été bien  supprimé");
+		</script>
+	</div>
+	<div class="text-danger"
+		 th:if="${#httpServletRequest.getParameter('s')=='0'}">
+		<script>
+			alert("Erreur de suppression");
+		</script>
+	</div>
+	<div class="text-danger"
+		 th:if="${#httpServletRequest.getParameter('a')=='0'}">
+		<script>
+			alert("Erreur d'ajout des données");
+		</script>
+	</div>
+	<div class="text-danger"
+		 th:if="${#httpServletRequest.getParameter('a')=='1'}">
+		<script>
+			alert("L'agent a été bien ajouté");
+		</script>
+	</div>
+</div>
+
+<!-- footer-->
+<footer class="container-fluid" style="margin: 15px">
+	<div class="navbar-fixed-bottom center-block text-center">
+		<small>By Jabrane,khiat,lahlou</small>
+	</div>
+</footer>
+</body>
+</html>
