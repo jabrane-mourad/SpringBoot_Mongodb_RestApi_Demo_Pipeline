@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('SCM checkout') {
             steps {
-                echo 'getting from github'
+                echo 'getting from vscode'
                 echo 'checout completed'
             }
         }
