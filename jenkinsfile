@@ -55,15 +55,14 @@ pipeline {
 
     stage('Upload Docker Image') {
       steps {
-        echo '>>> Login to Docker hub'
-        withCredentials([string(credentialsId: 'DockHubSecret', variable: 'DockerHubIDSecret')]) {
-            sh "docker login -u $MyDockerAccountName -p FSUKhZcMffuvB4s"
-        }
-        echo '>>> Start uploading the docker image'
-        sh "docker push $MyDockerAccountName/$MyDockerReposioryName:$MyTagName$BUILD_NUMBER"
-        echo '>>> End uploading the docker image'
+        script {
+          docker.withRegistry( '', regestryCredential ) {
+            dockerImage.push("$MyTagName$BUILD_NUMBER")
+            dockerImage.push()
+            }
       }
     }
+  }
 
     stage('Deploy') {
       steps {
