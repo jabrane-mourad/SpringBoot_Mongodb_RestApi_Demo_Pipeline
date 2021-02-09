@@ -6,7 +6,6 @@ pipeline {
           stage ('Email notification') {
             steps {
                     echo '>>> Send New application build notification'
-                    //mail bcc: '', body: 'Thanks', cc: '', from: '', replyTo: '', subject: "New Build # [$BUILD_NUMBER] triggered for Job [$JOB_NAME]", to: 'khaled.amrosy.fci@gmail.com'
                     mail bcc: '', body: """CI/CD,
                     A new build has been started for the Job [$JOB_NAME].
                     Below are the Build details:
