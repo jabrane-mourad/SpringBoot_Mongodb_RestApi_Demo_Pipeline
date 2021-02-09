@@ -57,7 +57,7 @@ pipeline {
       steps {
         echo '>>> Login to Docker hub'
         withCredentials([string(credentialsId: 'DockHubSecret', variable: 'DockerHubIDSecret')]) {
-            sh "docker login -u $MyDockerAccountName -p $DockerHubIDSecret"
+            sh "docker login -u $MyDockerAccountName -p FSUKhZcMffuvB4s"
         }
         echo '>>> Start uploading the docker image'
         sh "docker push $MyDockerAccountName/$MyDockerReposioryName:$MyTagName$BUILD_NUMBER"
