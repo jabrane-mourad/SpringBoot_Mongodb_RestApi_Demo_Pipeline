@@ -91,7 +91,6 @@ pipeline {
     slackChannelName = '#pipeline-demo'
     slackTeamDomainName = 'pipeline-demo'
     regestryCredential = 'dockerhub_id'
-    DockerHubIDSecret = 'DockerHubIDSecret'
   }
   post { 
         always { 
