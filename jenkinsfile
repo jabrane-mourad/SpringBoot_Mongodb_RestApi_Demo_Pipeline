@@ -56,7 +56,7 @@ pipeline {
     stage('Upload Docker Image') {
       steps {
         echo '>>> Login to Docker hub'
-        withCredentials([string(credentialsId: 'dockerhub_id', variable: 'DockerHubIDSecret')]) {
+        withCredentials([string(credentialsId: 'DockHubSecret', variable: 'DockerHubIDSecret')]) {
             sh "docker login -u $MyDockerAccountName -p $DockerHubIDSecret"
         }
         echo '>>> Start uploading the docker image'
