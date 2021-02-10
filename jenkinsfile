@@ -76,7 +76,7 @@ pipeline {
 
         echo 'End Killing and Removing old continaer'
         echo 'Start running a new container of the application'
-        sh "docker run -d -p 8082:8082 --name=$MyTagName$BUILD_NUMBER $MyDockerAccountName/$MyDockerReposioryName:$MyTagName$BUILD_NUMBER"
+        sh "docker run -d -p 9091:9091 --name=$MyTagName$BUILD_NUMBER $MyDockerAccountName/$MyDockerReposioryName:$MyTagName$BUILD_NUMBER"
         echo 'End running a new container of the application'
       }
     }
